@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{/fragments/header :: head}"></head>
+
+<body>
+
+	<div th:replace="~{/fragments/header :: navbar}"></div>
+
+	<div class="container">
+		<h3 class="jumbotron text-success">
+			<span sec:authentication="name"></span>'s shopping cart
+		</h3>
+
+		<div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
+
+		<h5 class="text-success"> Number of product types= <span th:text="${#maps.size(products)}"></span></h5>
+
+		<div class="alert alert-primary" th:if="${success}" th:utext="${success}"></div>
+		<div class="alert alert-danger" th:if="${error}" th:utext="${error}"></div>
+
+		<div class="panel-default well" th:each="product : ${products}">
+			<div class="panel-heading">
+				<h5><a th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().id}}">Title</a>
+				</h5>
+				<h6 th:text="${product.getKey().description}">Description</h6>
+			</div>
+			<div class="row panel-body">
+				<div th:inline="text" class="col-md-3">Price: [[${product.getKey().price}]] $</div>
+				<div th:inline="text" class="col-md-7">Quantity: [[${product.getValue()}]]</div>
+				<a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}" class="col-md-2">
+					<button type="button" class="btn btn-primary" th:text="Remove">Remove</button>
+				</a>
+			</div>
+			<br></br>
+		</div>
+
+		<div class="row panel-body">
+			<h5 class="col-md-10 text-primary" th:inline="text">Total: [[${total}]] $</h5>
+			<a th:href="@{'/shoppingCart/checkout'}" class="col-md-2">
+				<button type="button" class="btn btn-danger" th:text="Checkout">Checkout</button>
+			</a>
+		</div>
+
+	</div>
+
+	<div th:replace="~{/fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

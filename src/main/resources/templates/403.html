@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" >
+<head th:replace="~{/fragments/header :: head}"></head> 
+<body>
+	<div th:replace="~{/fragments/header :: navbar}"></div>
+	<!--Nếu đã đăng nhập mà truy xuất đến một url bất hợp lệ thì sẽ báo lỗi 403-->
+	<main class="container">
+	    <div class="starter-template">
+	        <h1>403 - Access is denied</h1>
+	        
+	        Hello, <span sec:authentication="name"></span>,&nbsp; you do not have permission to access this page.       
+	        
+	    </div>
+	</main>
+	<div th:replace="~{/fragments/footer :: footer}"></div>
+</body>
+</html>
+

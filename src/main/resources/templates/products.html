@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments/header :: head}" />
+
+<body>
+	<header th:insert="~{fragments/header :: navbar}" />
+	<main class="container-fluid">
+		<h1>List of products</h1>
+		<div class="card" style="width: 100%;" th:each="product : ${products}">
+			<div th:id="${product.id}" class="card-header">
+				<h3 th:text="${product.name}" />
+			</div>
+			<div th:id="${product.id}" class="card-body">
+				<h4 th:text="${product.description}">Description</h4>
+				<span th:inline="text">Price: [[${product.price}]] $</span>
+				<span th:inline="text">In Stock: [[${product.quantity}]]</span>
+				<a class="d-flex justify-content-end" th:href="@{'/shoppingCart/addProduct/{id}'(id=${product.id})}"
+					sec:authorize="isAuthenticated()" th:if="${product.quantity} > 0">
+					<button  type="button"  class="btn btn-primary"
+						th:text="Buy">Buy</button>
+				</a>
+
+			</div>
+		</div>
+		<div th:replace="~{/fragments/pagination :: pagination(URLparameter='/products')}"></div>
+	</main>
+	<div th:block th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>
