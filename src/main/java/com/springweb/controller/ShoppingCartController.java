@@ -32,7 +32,6 @@ public class ShoppingCartController  {
 	
 	@GetMapping("/shoppingCart/addProduct/{productId}")
 	public String addProductToCartStayCurrentPage(@PathVariable("productId") Long productId) {
-		Product product = productService.findById(productId).get();
 		System.out.println(productId);
 		productService.findById(productId).ifPresent(shoppingCartService::addProduct);
 		int qsCurrentPage = CurrentPageTransporter.getCurrentPage();

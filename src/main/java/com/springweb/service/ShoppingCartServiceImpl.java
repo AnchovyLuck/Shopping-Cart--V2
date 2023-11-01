@@ -38,10 +38,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void removeProduct(Product product) {
+
 		if (products.containsKey(product)) {
-			products.replace(product, products.get(product) - 1);
-		} else {
-			products.remove(product);
+			if (products.get(product) > 1) {
+				products.replace(product, products.get(product) - 1);
+			} else if (products.get(product) == 1){
+				products.remove(product);
+			}
 		}
 	}
 
